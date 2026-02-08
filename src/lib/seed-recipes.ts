@@ -22,7 +22,7 @@ export const seedRecipes: Recipe[] = [
       'Check steak temp — 130°F for medium-rare, 140°F for medium. Add 2-3 minutes if needed.',
       'Let steak rest 3 minutes before cutting. Serve.',
     ],
-    photoUrl: '',
+    photoUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80',
     servings: '1',
     cookTime: '20 min',
     prepTime: '30 sec',

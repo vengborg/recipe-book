@@ -74,15 +74,16 @@ export default function RecipeDetailPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Hero Image */}
-        {recipe.photoUrl && (
-          <div className="rounded-2xl overflow-hidden mb-8 aspect-[16/9] bg-neutral-100">
-            <img
-              src={recipe.photoUrl}
-              alt={recipe.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )}
+        <div className="rounded-2xl overflow-hidden mb-8 aspect-[16/9] bg-neutral-100">
+          <img
+            src={recipe.photoUrl || 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80'}
+            alt={recipe.title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80';
+            }}
+          />
+        </div>
 
         {/* Title & Meta */}
         <div className="mb-8">
