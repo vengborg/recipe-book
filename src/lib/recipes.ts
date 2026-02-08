@@ -1,7 +1,7 @@
 import { Recipe, RecipeFormData } from './types';
 import { seedRecipes } from './seed-recipes';
 
-const STORAGE_KEY = 'recipe-book-v2';
+const STORAGE_KEY = 'recipe-book-v3';
 
 function generateId(): string {
   return `r-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
