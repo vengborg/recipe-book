@@ -1,34 +1,16 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Source_Serif_4, DM_Sans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 
-const playfair = Playfair_Display({
-  variable: '--font-display',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-});
-
-const sourceSerif = Source_Serif_4({
-  variable: '--font-body',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  display: 'swap',
-});
-
-const dmSans = DM_Sans({
+const inter = Inter({
   variable: '--font-sans',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Our Recipe Book — Viktor & Meghan',
-  description: 'A personal collection of recipes we love. From our kitchen in Palm Springs.',
-  icons: {
-    icon: '/favicon.ico',
-  },
+  title: 'Recipe Book',
+  description: 'A personal collection of recipes — lunches & dinners we love.',
 };
 
 export default function RootLayout({
@@ -38,10 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${playfair.variable} ${sourceSerif.variable} ${dmSans.variable}`}
-      >
-        <div className="page-texture" />
+      <body className={`${inter.variable} font-sans bg-neutral-50 text-neutral-900 min-h-screen`}>
         {children}
       </body>
     </html>

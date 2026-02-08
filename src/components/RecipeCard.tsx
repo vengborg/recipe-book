@@ -1,91 +1,70 @@
 'use client';
 
 import Link from 'next/link';
-import { Recipe } from '@/lib/types';
+import { Recipe, PROTEIN_LABELS, METHOD_LABELS } from '@/lib/types';
 
 interface RecipeCardProps {
   recipe: Recipe;
-  index: number;
 }
 
-export default function RecipeCard({ recipe, index }: RecipeCardProps) {
-  const staggerClass = `stagger-${Math.min(index + 1, 8)}`;
+export default function RecipeCard({ recipe }: RecipeCardProps) {
+  const timeLabel = recipe.totalTimeMinutes
+    ? recipe.totalTimeMinutes < 60
+      ? `${recipe.totalTimeMinutes} min`
+      : `${Math.floor(recipe.totalTimeMinutes / 60)}h ${recipe.totalTimeMinutes % 60}m`
+    : recipe.cookTime || null;
 
   return (
     <Link href={`/recipe/${recipe.id}`}>
-      <article className={`recipe-card group bg-card rounded-2xl overflow-hidden shadow-sm border border-linen/50 animate-fade-in-up ${staggerClass}`}>
+      <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full flex flex-col">
         {/* Image */}
-        <div className="aspect-[4/3] overflow-hidden bg-linen relative">
+        <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           {recipe.photoUrl ? (
             <img
               src={recipe.photoUrl}
               alt={recipe.title}
-              className="recipe-image w-full h-full object-cover"
-              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-linen to-cream-dark">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="text-ink-muted/30">
-                <path d="M24 8C18 8 12 12 12 20C12 20 8 20 8 28C8 36 14 40 24 40C34 40 40 36 40 28C40 20 36 20 36 20C36 12 30 8 24 8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M24 4V8M20 6L22 10M28 6L26 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <div className="w-full h-full flex items-center justify-center text-neutral-300">
+              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
           )}
-          {/* Cook time badge */}
-          {recipe.cookTime && (
-            <div className="absolute bottom-3 right-3 bg-ink/70 backdrop-blur-sm text-white text-xs font-[family-name:var(--font-sans)] font-medium px-2.5 py-1 rounded-full">
-              {recipe.cookTime}
+          {/* Time badge */}
+          {timeLabel && (
+            <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+              {timeLabel}
             </div>
           )}
         </div>
 
         {/* Content */}
-        <div className="p-5">
-          {/* Tags */}
-          {recipe.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {recipe.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[0.65rem] font-[family-name:var(--font-sans)] font-medium uppercase tracking-wider text-terracotta"
-                >
-                  {tag}{recipe.tags.indexOf(tag) < Math.min(recipe.tags.length, 3) - 1 ? ' · ' : ''}
-                </span>
-              ))}
-            </div>
-          )}
-
-          <h3 className="font-[family-name:var(--font-display)] text-xl font-bold text-ink leading-tight mb-2 group-hover:text-terracotta transition-colors">
+        <div className="p-4 flex-1 flex flex-col">
+          <h3 className="font-semibold text-neutral-900 text-base leading-tight mb-1.5 line-clamp-2">
             {recipe.title}
           </h3>
-
-          <p className="text-ink-muted text-sm leading-relaxed line-clamp-2">
+          <p className="text-sm text-neutral-500 line-clamp-2 mb-3 flex-1">
             {recipe.description}
           </p>
 
-          {/* Footer meta */}
-          <div className="flex items-center gap-4 mt-4 pt-4 border-t border-linen">
-            {recipe.servings && (
-              <span className="text-xs font-[family-name:var(--font-sans)] text-ink-muted flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.2"/>
-                  <circle cx="7" cy="7" r="2" stroke="currentColor" strokeWidth="1.2"/>
-                </svg>
-                {recipe.servings} {recipe.servings === '1' ? 'serving' : 'servings'}
-              </span>
-            )}
-            {recipe.prepTime && (
-              <span className="text-xs font-[family-name:var(--font-sans)] text-ink-muted flex items-center gap-1.5">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.2"/>
-                  <path d="M7 4V7L9 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                </svg>
-                {recipe.prepTime} prep
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">
+              {PROTEIN_LABELS[recipe.proteinType]}
+            </span>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+              {METHOD_LABELS[recipe.cookingMethod]}
+            </span>
+            {recipe.nutrition.calories && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+                {recipe.nutrition.calories} kcal
               </span>
             )}
           </div>
         </div>
-      </article>
+      </div>
     </Link>
   );
 }
