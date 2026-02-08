@@ -14,6 +14,9 @@ import {
 import { addRecipe } from '@/lib/recipes';
 import { emptyNutrition } from '@/lib/nutrition';
 import AddByUrl from '@/components/AddByUrl';
+import AddByScreenshot from '@/components/AddByScreenshot';
+
+type ImportTab = 'url' | 'screenshot';
 
 const emptyForm: RecipeFormData = {
   title: '',
@@ -38,14 +41,15 @@ export default function AddRecipePage() {
   const [ingredientText, setIngredientText] = useState('');
   const [instructionText, setInstructionText] = useState('');
   const [imported, setImported] = useState(false);
+  const [importSource, setImportSource] = useState<'url' | 'screenshot' | null>(null);
+  const [activeTab, setActiveTab] = useState<ImportTab>('url');
 
-  const handleScraped = (scraped: ScrapedRecipe) => {
-    setForm({
-      ...scraped,
-    });
+  const handleImported = (scraped: ScrapedRecipe, source: 'url' | 'screenshot') => {
+    setForm({ ...scraped });
     setIngredientText(scraped.ingredients.join('\n'));
     setInstructionText(scraped.instructions.join('\n'));
     setImported(true);
+    setImportSource(source);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -91,16 +95,93 @@ export default function AddRecipePage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         <h1 className="text-2xl font-bold text-neutral-900 tracking-tight mb-6">Add Recipe</h1>
 
-        {/* URL Import */}
+        {/* Import Section */}
         <div className="mb-8">
-          <AddByUrl onScraped={handleScraped} />
+          {/* Tabs */}
+          <div className="flex gap-1 p-1 bg-neutral-100 rounded-xl mb-4 w-fit">
+            <button
+              type="button"
+              onClick={() => setActiveTab('url')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                activeTab === 'url'
+                  ? 'bg-white text-neutral-900 shadow-sm'
+                  : 'text-neutral-500 hover:text-neutral-700'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                  />
+                </svg>
+                Paste URL
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('screenshot')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                activeTab === 'screenshot'
+                  ? 'bg-white text-neutral-900 shadow-sm'
+                  : 'text-neutral-500 hover:text-neutral-700'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Screenshot
+              </span>
+            </button>
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === 'url' && (
+            <AddByUrl onScraped={(recipe) => handleImported(recipe, 'url')} />
+          )}
+          {activeTab === 'screenshot' && (
+            <AddByScreenshot onParsed={(recipe) => handleImported(recipe, 'screenshot')} />
+          )}
         </div>
 
+        {/* Import success banner */}
         {imported && (
-          <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700">
-            ✓ Recipe imported! Review the details below and save.
+          <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700 flex items-start gap-2">
+            <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span>
+              Recipe imported{importSource === 'screenshot' ? ' from screenshot' : ' from URL'}!
+              Review the details below{importSource === 'screenshot' ? ' — OCR may need some corrections' : ''} and save.
+            </span>
           </div>
         )}
+
+        {/* Divider with "or" */}
+        <div className="relative mb-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-neutral-200" />
+          </div>
+          <div className="relative flex justify-center">
+            <span className="bg-neutral-50 px-4 text-xs text-neutral-400 uppercase tracking-wider">
+              or fill in manually
+            </span>
+          </div>
+        </div>
 
         {/* Manual Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
