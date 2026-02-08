@@ -9,12 +9,14 @@ import IngredientList from '@/components/IngredientList';
 import NutritionCard from '@/components/NutritionCard';
 import VideoEmbed from '@/components/VideoEmbed';
 import StepByStep from '@/components/StepByStep';
+import CookingMethodToggle from '@/components/CookingMethodToggle';
 
 export default function RecipeDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [cookingMode, setCookingMode] = useState<'original' | 'air-fryer'>('original');
 
   useEffect(() => {
     const id = params.id as string;
@@ -151,13 +153,35 @@ export default function RecipeDetailPage() {
           </div>
         )}
 
+        {/* Air Fryer Toggle */}
+        {recipe.airFryerAlt && recipe.cookingMethod !== 'air-fryer' && (
+          <div className="mb-6">
+            <CookingMethodToggle
+              originalMethod={METHOD_LABELS[recipe.cookingMethod]}
+              onModeChange={setCookingMode}
+            />
+            {cookingMode === 'air-fryer' && recipe.airFryerAlt.notes && (
+              <p className="mt-3 text-sm text-neutral-500 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
+                <span className="font-medium text-amber-700">Ninja Crispi Pro adaptation:</span>{' '}
+                {recipe.airFryerAlt.notes}
+              </p>
+            )}
+          </div>
+        )}
+
         {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sidebar: Ingredients + Nutrition */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-neutral-100">
               <h2 className="text-base font-bold text-neutral-900 mb-4 tracking-tight">Ingredients</h2>
-              <IngredientList ingredients={recipe.ingredients} />
+              <IngredientList
+                ingredients={
+                  cookingMode === 'air-fryer' && recipe.airFryerAlt
+                    ? recipe.airFryerAlt.ingredients
+                    : recipe.ingredients
+                }
+              />
             </div>
             <NutritionCard nutrition={recipe.nutrition} />
           </div>
@@ -165,8 +189,21 @@ export default function RecipeDetailPage() {
           {/* Main: Instructions */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-neutral-100">
-              <h2 className="text-base font-bold text-neutral-900 mb-4 tracking-tight">Instructions</h2>
-              <StepByStep instructions={recipe.instructions} />
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold text-neutral-900 tracking-tight">Instructions</h2>
+                {cookingMode === 'air-fryer' && recipe.airFryerAlt && (
+                  <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">
+                    {recipe.airFryerAlt.cookTime} cook time
+                  </span>
+                )}
+              </div>
+              <StepByStep
+                instructions={
+                  cookingMode === 'air-fryer' && recipe.airFryerAlt
+                    ? recipe.airFryerAlt.instructions
+                    : recipe.instructions
+                }
+              />
             </div>
           </div>
         </div>

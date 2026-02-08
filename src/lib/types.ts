@@ -28,6 +28,15 @@ export type CookingMethod =
 
 export type TimeCategory = 'quick' | 'medium' | 'long';
 
+export interface AirFryerAlt {
+  ingredients: string[];
+  instructions: string[];
+  cookTime: string;
+  prepTime: string;
+  totalTimeMinutes: number | null;
+  notes: string;
+}
+
 export interface Recipe {
   id: string;
   title: string;
@@ -44,6 +53,7 @@ export interface Recipe {
   proteinType: ProteinType;
   cookingMethod: CookingMethod;
   nutrition: Nutrition;
+  airFryerAlt?: AirFryerAlt;
   createdAt: string;
   updatedAt: string;
 }
