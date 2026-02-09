@@ -3,6 +3,15 @@
 import Link from 'next/link';
 import { Recipe, PROTEIN_LABELS, METHOD_LABELS } from '@/lib/types';
 
+function macroSummary(n: { protein: number | null; fat: number | null; carbs: number | null }) {
+  const p = n.protein ?? 0;
+  const f = n.fat ?? 0;
+  const c = n.carbs ?? 0;
+  const total = p * 4 + f * 9 + c * 4;
+  if (total === 0) return null;
+  return `P${Math.round((p * 4 / total) * 100)} F${Math.round((f * 9 / total) * 100)} C${Math.round((c * 4 / total) * 100)}`;
+}
+
 interface RecipeCardProps {
   recipe: Recipe;
 }
@@ -52,9 +61,9 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
               {METHOD_LABELS[recipe.cookingMethod]}
             </span>
-            {recipe.nutrition.calories && (
+            {macroSummary(recipe.nutrition) && (
               <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-green-50 text-green-700 border border-green-100">
-                {recipe.nutrition.calories} kcal
+                {macroSummary(recipe.nutrition)}
               </span>
             )}
           </div>
