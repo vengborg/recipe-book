@@ -47,7 +47,7 @@ export const seedRecipes: Recipe[] = [
     description:
       'Rick Martínez\'s 5-star NYT classic. Rotisserie chicken + canned enchilada sauce = ready in about an hour. 4,283 ratings can\'t be wrong. American Southwest-inspired, dead simple, freezes beautifully.',
     ingredients: [
-      '¼ cup vegetable oil',
+      '¼ cup avocado oil',
       '12 (6-inch) corn tortillas',
       '½ medium white onion, chopped',
       '1 medium poblano or green bell pepper, stemmed, seeded and chopped',
@@ -87,7 +87,7 @@ export const seedRecipes: Recipe[] = [
     },
     airFryerAlt: {
       ingredients: [
-        '2 tbsp vegetable oil',
+        '2 tbsp avocado oil',
         '8 (6-inch) corn tortillas',
         '½ medium white onion, chopped',
         '1 medium poblano or green bell pepper, stemmed, seeded and chopped',
@@ -229,7 +229,7 @@ export const seedRecipes: Recipe[] = [
       '2 tbsp fish sauce',
       'Kosher salt',
       'Pinch of granulated sugar',
-      '¼ cup extra-virgin olive oil or grapeseed oil, plus more for brushing',
+      '¼ cup extra-virgin olive oil, plus more for brushing',
       '1¼ lbs salmon fillet, preferably 1 large center-cut piece',
       '8 cups salad greens (Little Gem, bibb, or Boston lettuce)',
       '1 cup mixed soft herbs (cilantro, mint, basil), leaves and tender stems',
@@ -268,7 +268,7 @@ export const seedRecipes: Recipe[] = [
         '2 tbsp fish sauce',
         'Kosher salt',
         'Pinch of granulated sugar',
-        '¼ cup extra-virgin olive oil or grapeseed oil, plus more for brushing',
+        '¼ cup extra-virgin olive oil, plus more for brushing',
         '1¼ lbs salmon fillet, preferably 1 large center-cut piece',
         '8 cups salad greens (Little Gem, bibb, or Boston lettuce)',
         '1 cup mixed soft herbs (cilantro, mint, basil), leaves and tender stems',
@@ -303,7 +303,7 @@ export const seedRecipes: Recipe[] = [
       '¾ tsp ground cumin',
       '1 lb large shrimp, peeled and deveined',
       'Kosher salt and black pepper',
-      '6 tbsp canola oil',
+      '6 tbsp avocado oil (high smoke point needed for frying)',
       '1 large shallot, halved lengthwise and thinly sliced',
       '4 garlic cloves, thinly sliced crosswise',
       '1 cinnamon stick',
@@ -312,7 +312,7 @@ export const seedRecipes: Recipe[] = [
     ],
     instructions: [
       'Make the marinade: Stir together soy sauce, sugar, red-pepper flakes, and cumin in a medium bowl. Add shrimp, season with salt and pepper, toss to coat. Set aside.',
-      'Set a fine-mesh sieve over a heat-proof bowl next to the stove. In a large nonstick skillet, heat canola oil with shallot, garlic, and cinnamon stick over medium-high.',
+      'Set a fine-mesh sieve over a heat-proof bowl next to the stove. In a large nonstick skillet, heat avocado oil with shallot, garlic, and cinnamon stick over medium-high.',
       'When it starts to bubble, reduce to medium. Cook, stirring occasionally, until shallots are golden brown, 5–9 minutes. Drain through the sieve (catch the oil!). Discard cinnamon. Season fried shallots and garlic with salt. Set aside.',
       'Return the infused oil to the skillet over medium-high. Add green beans, season with salt, cook until crisp-tender, 2–3 minutes.',
       'Push green beans to one side. Add shrimp with marinade and peanuts (if using). Cook until shrimp is done, 2–3 minutes per side.',
@@ -357,7 +357,7 @@ export const seedRecipes: Recipe[] = [
       'Heat a large Dutch oven or heavy pot over high until very hot. Add beef, smush and spread in a single layer. Season with salt and pepper. Cook without stirring 4–5 minutes until seared, then stir and break into tiny bits, 1 more minute. Transfer beef to a plate with a slotted spoon.',
       'Push meat drippings to one side. Add onion and carrots to the beef fat. Season with salt and pepper. Cook, stirring occasionally, until onion is translucent, about 5 minutes.',
       'Add red curry paste (2 tbsp mild, 3 for heat). Stir until darkened, 2–3 minutes. Pour in tomato sauce, swish the can with ⅓ can of water and add that too. Return beef and any juices. Stir, bring to a simmer, reduce heat to low.',
-      'NOW bring a large pot of salted water to a boil. Add 1 tbsp oil. Cook Cappello\'s penne from frozen — it\'s done in under 2 minutes. Watch carefully, it goes mushy fast. Save 1 cup pasta water before draining. Gently drain and rinse briefly under cold water.',
+      'NOW bring a large pot of salted water to a boil. Add 1 tbsp olive oil. Cook Cappello\'s penne from frozen — it\'s done in under 2 minutes. Watch carefully, it goes mushy fast. Save 1 cup pasta water before draining. Gently drain and rinse briefly under cold water.',
       'Add drained Cappello\'s to the simmering sauce. Stir in the heavy cream. Taste and season with salt and pepper. If sauce is too thick, add pasta water a splash at a time.',
       'Serve immediately — Cappello\'s doesn\'t hold well, so plate it right away.',
     ],
